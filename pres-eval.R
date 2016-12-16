@@ -41,8 +41,8 @@ elec_df12$county[city_ind_5] <- "James City"
 elec_df12$county[city_ind_6] <- "Carson City"
 
 # "Shannon" to "Oglala Lakota"
-elec_df08$county[2388] <- "Oglala Lakota"
-elec_df12$county[2389] <- "Oglala Lakota"
+elec_df08$county[2389] <- "Oglala Lakota"
+elec_df12$county[2388] <- "Oglala Lakota"
 
 # "La Salle" or "Lasalle" to "LaSalle" (for IL and LA) or "La Salle" (for TX)
 elec_df08$county[1114] <- "LaSalle"
@@ -56,6 +56,14 @@ elec_df12$county[2635] <- "La Salle"
 # "Dona Ana" to "Doña Ana"
 elec_df08$county[1774] <- "Doña Ana"
 elec_df12$county[1773] <- "Doña Ana"
+
+# "Saint" to "St."
+elec_df08$county <- gsub("Saint", "St.", elec_df08$county)
+elec_df08$county[1548] <- "Ste. Genevieve"
+
+# "DeBaca" to "De Baca"
+elec_df08$county[1773] <- "De Baca"
+elec_df12$county[1772] <- "De Baca"
 
 # Change working directory
 setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Election data/Shapefiles/cb_2015_us_county_20m")
