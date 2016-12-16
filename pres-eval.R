@@ -61,9 +61,24 @@ elec_df12$county[1773] <- "Doña Ana"
 elec_df08$county <- gsub("Saint", "St.", elec_df08$county)
 elec_df08$county[1548] <- "Ste. Genevieve"
 
+elec_df12$county <- gsub("Saint", "St.", elec_df12$county)
+elec_df12$county[1547] <- "Ste. Genevieve"
+
 # "DeBaca" to "De Baca"
 elec_df08$county[1773] <- "De Baca"
 elec_df12$county[1772] <- "De Baca"
+
+# Other misc fixes
+elec_df12$county[58] <- "St. Clair"
+elec_df12$county[144] <- "St. Francis"
+elec_df12$county[713] <- "LaPorte"
+elec_df12$county[1229] <- "Grand Traverse"
+elec_df12$county[1485] <- "DeKalb"
+elec_df12$county[1593] <- "Lewis and Clark"
+elec_df12$county[608] <- "Jo Daviess"
+elec_df12$county[585] <- "De Witt"
+elec_df12$county[2141] <- "Le Flore"
+elec_df12$county[2838] <- "King and Queen"
 
 # Change working directory
 setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Election data/Shapefiles/cb_2015_us_county_20m")
@@ -71,6 +86,11 @@ setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Eval
 # Read in shapefiles
 election.shp <- readShapeSpatial("cb_2015_us_county_20m.shp")
 election.shp <- subset(election.shp, election.shp$STATEFP != 72)
+
+# Resolve case issues
+elec_df12$county <- tolower(elec_df12$county)
+elec_df08$county <- tolower(elec_df08$county)
+election.shp$NAME <- tolower(election.shp$NAME)
 
 # Combining county and state names into one column to give each county a unique id that can be used when we populate the map
 elec_df08 <- unite(elec_df08, id, county, state, sep = ", ")
@@ -142,7 +162,7 @@ ggplot() +
                aes(x = long, y = lat, group = group, fill = pct_winner),
                color = "white", size = 0.25) +
   coord_map() +
-  scale_fill_gradient2(name = "Percent", low = "#ff3f3f", mid = "white", high = "#3c99fc", midpoint = 0) +
+  scale_fill_gradient2(name = "Percent", low = "#ff3f3f", mid = "white", high = "#3c99fc", midpoint = 0, limits = c(-100, 100)) +
   theme_nothing(legend = TRUE) +
   ggtitle("General Election Results, 2008")
 
@@ -151,7 +171,7 @@ ggplot() +
                aes(x = long, y = lat, group = group, fill = pct_winner),
                color = "white", size = 0.25) +
   coord_map() +
-  scale_fill_gradient2(name = "Percent", low = "#ff3f3f", mid = "white", high = "#3c99fc", midpoint = 0) +
+  scale_fill_gradient2(name = "Percent", low = "#ff3f3f", mid = "white", high = "#3c99fc", midpoint = 0, limits = c(-100, 100)) +
   theme_nothing(legend = TRUE) +
   ggtitle("General Election Results, 2012")
 
