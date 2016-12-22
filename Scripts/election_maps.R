@@ -1,9 +1,8 @@
+library(ggplot2)
+library(maptools)
 library(dplyr)
 library(tidyr)
 library(readr)
-library(ggplot2)
-library(maptools)
-library(rgeos)
 library(Cairo)
 library(ggmap)
 library(scales)
@@ -14,8 +13,22 @@ setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Eval
 elec_data <- read_csv("elec_data.csv")
 elec_df <- data.frame(elec_data)
 
+# Create separate data frames for Alaska, as the data is organized by Congressional District rather than County
+alaska_df08 <- subset(elec_df, elec_df$year == 2008 & elec_df$state == "AK")
+alaska_df12 <- subset(elec_df, elec_df$year == 2012 & elec_df$state == "AK")
+
+# Assign each row in Alaska data frames a number 1-40, each representing a unique Legislative District
+for (i in 1:40) {
+  alaska_df08$id[i] <- i
+  alaska_df12$id[i] <- i
+}
+
+# Filter Alaskan results from the main dataframe, as Alaskan results shown by Legislative District rather than county
+
 elec_df08 <- subset(elec_df, elec_df$year == 2008 & elec_df$state != "AK")
 elec_df12 <- subset(elec_df, elec_df$year == 2012 & elec_df$state != "AK")
+
+# Handle naming issues in election dataframe
 
 city_ind_1 <- grep("Charles City", elec_df08$county)
 city_ind_2 <- grep("James City", elec_df08$county)
@@ -25,6 +38,7 @@ city_ind_4 <- grep("Charles City", elec_df12$county)
 city_ind_5 <- grep("James City", elec_df12$county)
 city_ind_6 <- grep("Carson City", elec_df12$county)
 
+# Keep only the name of the county, remove extraneous info e.g. "County, Parish, City"
 elec_df08$county <- sapply(strsplit(elec_df08$county, " Count"), "[", 1)
 elec_df08$county <- sapply(strsplit(elec_df08$county, " Cit"), "[", 1)
 elec_df08$county <- sapply(strsplit(elec_df08$county, " Paris"), "[", 1)
@@ -40,6 +54,7 @@ elec_df12$county[city_ind_4] <- "Charles City"
 elec_df12$county[city_ind_5] <- "James City"
 elec_df12$county[city_ind_6] <- "Carson City"
 
+# Handle naming discrepencies
 # "Shannon" to "Oglala Lakota"
 elec_df08$county[2389] <- "Oglala Lakota"
 elec_df12$county[2388] <- "Oglala Lakota"
@@ -83,16 +98,22 @@ elec_df12$county[2838] <- "King and Queen"
 # Change working directory
 setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Election data/Shapefiles/cb_2015_us_county_20m")
 
-# Read in shapefiles
+# Read in shapefiles. Shapefiles will provide coordinates for each county to be plotted
 election.shp <- readShapeSpatial("cb_2015_us_county_20m.shp")
 election.shp <- subset(election.shp, election.shp$STATEFP != 72)
+
+setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Election data/Shapefiles/cb_2015_02_sldl_500k")
+alaska.district.shp <- readShapeSpatial("cb_2015_02_sldl_500k.shp")
+
+# Change name of Alaska shapefile column that gives Congressional District numbers so we can merge data properly. 
+names(alaska.district.shp)[5] <- "id"
 
 # Resolve case issues
 elec_df12$county <- tolower(elec_df12$county)
 elec_df08$county <- tolower(elec_df08$county)
 election.shp$NAME <- tolower(election.shp$NAME)
 
-# Combining county and state names into one column to give each county a unique id that can be used when we populate the map
+# Combining county and state names into one column to give each county a unique id in the format of "County, State" that can be used when we populate the map
 elec_df08 <- unite(elec_df08, id, county, state, sep = ", ")
 elec_df12 <- unite(elec_df12, id, county, state, sep = ", ")
 
@@ -109,6 +130,19 @@ for(i in 1:length(elec_df12$pct_winner)) {
   }
 }
 
+for(i in 1:length(alaska_df08$pct_winner)) {
+  if (alaska_df08$winner[i] == "rep") {
+    alaska_df08$pct_winner[i] <- -1 * alaska_df08$pct_winner[i]
+  }
+}
+
+for (i in 1:length(alaska_df12$pct_winner)) {
+  if (alaska_df12$winner[i] == "rep") {
+    alaska_df12$pct_winner[i] <- -1 * alaska_df12$pct_winner[i]
+  }
+}
+
+# Add state codes to county names in the shapefile to make a unique identifier for each county in the format of "County, State"
 state_df <- data.frame(unique(election.shp$STATEFP))
 state_df <- arrange(state_df, unique.election.shp.STATEFP.)
 state_df$alpha <- c("AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", 
@@ -130,14 +164,39 @@ for(i in 1:length(election.shp$STATEFP)) {
 }
 
 election.shp.df <- unite(election.shp.df, id, NAME, State, sep = ", ")
-
 election.shp$id <- election.shp.df$id
 
+# Preparing Alaska files
+
+# Turn the shapefile into a plottable dataframe
+alaska.districts.f <- fortify(alaska.district.shp, region = "id")
+
+# Some points in Alaska and Hawaii have coordinate values that are positive when they should be negative. This fixes the issue
+for (i in 1:length(alaska.districts.f$long)) {
+  if (alaska.districts.f$long[i] > 100) {
+    alaska.districts.f$long[i] <- -alaska.districts.f$long[i]
+  }
+}
+
+# Merge election data with shapefile on the unique identifer we created for each county. This will ensure that each county plotted will have it's corresponding percent value.
+alaska08.shp <- merge(alaska.districts.f, alaska_df08, by = "id", all.x=TRUE)
+alaska12.shp <- merge(alaska.districts.f, alaska_df12, by = "id", all.x=TRUE)
+
+# Order the coordinates so that they will be mapped in the correct order.
+alaska08.plot <- alaska08.shp[order(alaska08.shp$order), ]
+alaska12.plot <- alaska12.shp[order(alaska12.shp$order), ]
+
+
+# Preparing continental United States and Hawaii files
+
+# Turn the shapefile into a plottable dataframe
 election.shp.f <- fortify(election.shp, region = "id")
 
+# Merge election data with shapefile on the unique identifer we created for each county. This will ensure that each county plotted will have it's corresponding percent value.
 merge08.shp <- merge(election.shp.f, elec_df08, by = "id", all.x=TRUE)
 merge12.shp <- merge(election.shp.f, elec_df12, by = "id", all.x=TRUE)
 
+# Some points in Alaska and Hawaii have coordinate values that are positive when they should be negative. This fixes the issue
 for (i in 787:length(merge08.shp$long)) {
   if (merge08.shp$long[i] > 100) {
     merge08.shp$long[i] <- -merge08.shp$long[i]
@@ -150,12 +209,40 @@ for (i in 1:length(merge12.shp$long)) {
   }
 }
 
-
+# Create subsets of the coordinate data so that we have separate files for continental United States and Hawaii
+hawaii08.shp <- subset(merge08.shp, merge08.shp$long < -130 & merge08.shp$lat < 38)
+hawaii12.shp <- subset(merge12.shp, merge12.shp$long < -130 & merge12.shp$lat < 38)
 merge08.shp <- subset(merge08.shp, merge08.shp$long > - 130)
 merge12.shp <- subset(merge12.shp, merge12.shp$long > - 130)
 
+# Order the coordinates so that they will be mapped in the correct order.
 final08.plot <- merge08.shp[order(merge08.shp$order), ]
 final12.plot <- merge12.shp[order(merge12.shp$order), ]
+hawaii08.plot <- hawaii08.shp[order(hawaii08.shp$order), ]
+hawaii12.plot <- hawaii12.shp[order(hawaii12.shp$order), ]
+
+# Plots
+# ggplot() function will plot the coordinate points for each map and will fill 
+# in the counties based on the election result. 
+# We adjust the theme so that there are no visible axes or gridlines
+
+ggplot() +
+  geom_polygon(data = alaska08.plot,
+               aes(x = long, y = lat, group = group, fill = pct_winner),
+               color = "white", size = 0.25) +
+  coord_map() +
+  scale_fill_gradient2(name = "Percent", low = "#ff3f3f", mid = "white", high = "#3c99fc", midpoint = 0, limits = c(-100, 100)) +
+  theme_nothing(legend = TRUE) +
+  ggtitle("Alaska Election Results, 2008")
+
+ggplot() +
+  geom_polygon(data = alaska12.plot,
+               aes(x = long, y = lat, group = group, fill = pct_winner),
+               color = "white", size = 0.25) +
+  coord_map() +
+  scale_fill_gradient2(name = "Percent", low = "#ff3f3f", mid = "white", high = "#3c99fc", midpoint = 0, limits = c(-100, 100)) +
+  theme_nothing(legend = TRUE) +
+  ggtitle("Alaska Election Results, 2012")
 
 ggplot() +
   geom_polygon(data = final08.plot,
@@ -175,9 +262,34 @@ ggplot() +
   theme_nothing(legend = TRUE) +
   ggtitle("General Election Results, 2012")
 
+ggplot() +
+  geom_polygon(data = hawaii08.plot,
+               aes(x = long, y = lat, group = group, fill = pct_winner),
+               color = "white", size = 0.25) +
+  coord_map() +
+  scale_fill_gradient2(name = "Percent", low = "#ff3f3f", mid = "white", high = "#3c99fc", midpoint = 0, limits = c(-100, 100)) +
+  theme_nothing(legend = TRUE) +
+  ggtitle("Hawaii Election Results, 2008")
+
+ggplot() +
+  geom_polygon(data = hawaii12.plot,
+               aes(x = long, y = lat, group = group, fill = pct_winner),
+               color = "white", size = 0.25) +
+  coord_map() +
+  scale_fill_gradient2(name = "Percent", low = "#ff3f3f", mid = "white", high = "#3c99fc", midpoint = 0, limits = c(-100, 100)) +
+  theme_nothing(legend = TRUE) +
+  ggtitle("Hawaii Election Results, 2012")
 
 
+# ACKNOWLEDGEMENTS
 
+# The methodology used to plot maps using ggplot2 was based on this blog post: 
+# https://www.r-bloggers.com/mapping-with-ggplot-create-a-nice-choropleth-map-in-r/
+
+# All shapefiles came from the United States Census Bureau's MAF/TIGER geographic database
+
+# Election results for each county came from the following Github repository:
+# https://github.com/helloworlddata/us-presidential-election-county-results
 
 
 
