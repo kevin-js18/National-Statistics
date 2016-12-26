@@ -22,11 +22,15 @@ usa_emissions <- subset(emissions, emissions$Country == "United States" & emissi
 
 ggplot(usa_emissions, aes(x = usa_emissions$Year, y = usa_emissions$`Total CO2 Emissions Excluding Land-Use Change and Forestry (MtCO2)`)) +
   geom_line() +
-  geom_vline(xintercept = 2009)
+  geom_vline(xintercept = 2009) +
+  xlab("Year") +
+  ylab("Total Carbon Emissions, in Metric Tons of CO2 Equivalent")
 
 ggplot(coal, aes(x = YYYYMM, y = total)) +
   geom_line() +
-  geom_vline(xintercept = 2009)
+  geom_vline(xintercept = 2009) + 
+  xlab("Year") +
+  ylab("Total Coal Consumption, in Thousands of Short Tons")
 
 # SOURCES
 
