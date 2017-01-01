@@ -3,6 +3,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(googleVis)
+library(shiny)
 
 setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Immigration data/Permanent residents")
 
@@ -22,8 +23,8 @@ for (i in 1:length(df_list)) {
   names(df_list[[i]])[1] <- "Country"
   names(df_list[[i]])[3] <- "Family"
   names(df_list[[i]])[4] <- "Employment"
-  names(df_list[[i]])[5] <- "Relative"
-  names(df_list[[i]])[7] <- "Asylum"
+  names(df_list[[i]])[5] <- "Immediate Relative"
+  names(df_list[[i]])[7] <- "Asylum or Refugee"
 }
 
 for (i in 1:length(df_list)) {
@@ -44,9 +45,9 @@ for (i in 2:length(df_list)) {
       df_list$d15$Total[j] <- df_list$d15$Total[j] + df_list[[i]]$Total[grep(df_list$d15$Country[j], df_list[[i]]$Country)] 
       df_list$d15$Family[j] <- df_list$d15$Family[j] + df_list[[i]]$Family[grep(df_list$d15$Country[j], df_list[[i]]$Country)]
       df_list$d15$Employment[j] <- df_list$d15$Employment[j] + df_list[[i]]$Employment[grep(df_list$d15$Country[j], df_list[[i]]$Country)]
-      df_list$d15$Relative[j] <- df_list$d15$Relative[j] + df_list[[i]]$Relative[grep(df_list$d15$Country[j], df_list[[i]]$Country)]
+      df_list$d15$`Immediate Relative`[j] <- df_list$d15$`Immediate Relative`[j] + df_list[[i]]$`Immediate Relative`[grep(df_list$d15$Country[j], df_list[[i]]$Country)]
       df_list$d15$Diversity[j] <- df_list$d15$Diversity[j] + df_list[[i]]$Diversity[grep(df_list$d15$Country[j], df_list[[i]]$Country)]
-      df_list$d15$Asylum[j] <- df_list$d15$Asylum[j] + df_list[[i]]$Asylum[grep(df_list$d15$Country[j], df_list[[i]]$Country)]
+      df_list$d15$`Asylum or Refugee`[j] <- df_list$d15$`Asylum or Refugee`[j] + df_list[[i]]$`Asylum or Refugee`[grep(df_list$d15$Country[j], df_list[[i]]$Country)]
       df_list$d15$Other[j] <- df_list$d15$Other[j] + df_list[[i]]$Other[grep(df_list$d15$Country[j], df_list[[i]]$Country)]
     }
   }
@@ -65,12 +66,12 @@ top_10 <- top_10[c(2:11, 1), ]
 top_10 <- top_10[, -2]
 
 top_10.g <- top_10 %>%
-  gather(`Admission Class`, Total, Relative:Other) %>%
+  gather(`Admission Class`, Total, `Immediate Relative`:Other) %>%
   group_by(Country)
 
 just.top_10 <- subset(top_10.g, top_10.g$Country != "Total")
 
-plot(
+lpr.plot <- plot(
   gvisSankey(just.top_10, from = "Country", to = "Admission Class", weight = "Total",
              options = list(width = 1200, height = 1000,
                             sankey = "{ iterations:0 }"))
@@ -78,12 +79,9 @@ plot(
 
 
 
+# SOURCES
 
-
-
-
-
-
-
+# US Department of Homeland Security, Yearbook of Immigration Statistics, 2009 - 2015
+# https://www.dhs.gov/immigration-statistics/yearbook/2015
 
 

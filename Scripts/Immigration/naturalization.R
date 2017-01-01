@@ -20,3 +20,7 @@ naturalizations00 %>%
   ggtitle("Naturalizations") +
   scale_fill_manual(values = c("#4bfc51", "#ff6666"))
 
+# SOURCES
+
+# US Department of Homeland Security, Yearbook of Immigration Statistics, 2009 - 2015
+# https://www.dhs.gov/immigration-statistics/yearbook/2015

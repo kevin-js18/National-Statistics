@@ -1,0 +1,414 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>SankeyID7acc9310b8</title>
+<meta http-equiv="content-type" content="text/html;charset=utf-8" />
+<style type="text/css">
+body {
+  color: #444444;
+  font-family: Arial,Helvetica,sans-serif;
+  font-size: 75%;
+  }
+  a {
+  color: #4D87C7;
+  text-decoration: none;
+}
+</style>
+</head>
+<body>
+ <!-- Sankey generated in R 3.3.1 by googleVis 0.6.1 package -->
+<!-- Fri Dec 30 12:29:04 2016 -->
+
+
+<!-- jsHeader -->
+<script type="text/javascript">
+ 
+// jsData 
+function gvisDataSankeyID7acc9310b8 () {
+var data = new google.visualization.DataTable();
+var datajson =
+[
+ [
+"Mexico",
+"Immediate Relative",
+624165
+],
+[
+"China, People's Republic",
+"Immediate Relative",
+169547
+],
+[
+"India",
+"Immediate Relative",
+138552
+],
+[
+"Philippines",
+"Immediate Relative",
+206943
+],
+[
+"Dominican Republic",
+"Immediate Relative",
+153911
+],
+[
+"Cuba",
+"Immediate Relative",
+21388
+],
+[
+"Vietnam",
+"Immediate Relative",
+85746
+],
+[
+"Korea, South",
+"Immediate Relative",
+55340
+],
+[
+"Colombia",
+"Immediate Relative",
+94303
+],
+[
+"Haiti",
+"Immediate Relative",
+66328
+],
+[
+"Mexico",
+"Family",
+287456
+],
+[
+"China, People's Republic",
+"Family",
+99935
+],
+[
+"India",
+"Family",
+91026
+],
+[
+"Philippines",
+"Family",
+116209
+],
+[
+"Dominican Republic",
+"Family",
+169335
+],
+[
+"Cuba",
+"Family",
+11308
+],
+[
+"Vietnam",
+"Family",
+111258
+],
+[
+"Korea, South",
+"Family",
+11866
+],
+[
+"Colombia",
+"Family",
+26571
+],
+[
+"Haiti",
+"Family",
+55711
+],
+[
+"Mexico",
+"Employment",
+59103
+],
+[
+"China, People's Republic",
+"Employment",
+120301
+],
+[
+"India",
+"Employment",
+209836
+],
+[
+"Philippines",
+"Employment",
+56721
+],
+[
+"Dominican Republic",
+"Employment",
+2575
+],
+[
+"Cuba",
+"Employment",
+43
+],
+[
+"Vietnam",
+"Employment",
+2341
+],
+[
+"Korea, South",
+"Employment",
+82992
+],
+[
+"Colombia",
+"Employment",
+12477
+],
+[
+"Haiti",
+"Employment",
+580
+],
+[
+"Mexico",
+"Asylum or Refugee",
+4435
+],
+[
+"China, People's Republic",
+"Asylum or Refugee",
+111151
+],
+[
+"India",
+"Asylum or Refugee",
+9595
+],
+[
+"Philippines",
+"Asylum or Refugee",
+350
+],
+[
+"Dominican Republic",
+"Asylum or Refugee",
+633
+],
+[
+"Cuba",
+"Asylum or Refugee",
+237948
+],
+[
+"Vietnam",
+"Asylum or Refugee",
+5756
+],
+[
+"Korea, South",
+"Asylum or Refugee",
+102
+],
+[
+"Colombia",
+"Asylum or Refugee",
+12067
+],
+[
+"Haiti",
+"Asylum or Refugee",
+17428
+],
+[
+"Mexico",
+"Diversity",
+130
+],
+[
+"China, People's Republic",
+"Diversity",
+258
+],
+[
+"India",
+"Diversity",
+440
+],
+[
+"Philippines",
+"Diversity",
+30
+],
+[
+"Dominican Republic",
+"Diversity",
+77
+],
+[
+"Cuba",
+"Diversity",
+1264
+],
+[
+"Vietnam",
+"Diversity",
+11
+],
+[
+"Korea, South",
+"Diversity",
+192
+],
+[
+"Colombia",
+"Diversity",
+61
+],
+[
+"Haiti",
+"Diversity",
+16
+],
+[
+"Mexico",
+"Other",
+40176
+],
+[
+"China, People's Republic",
+"Other",
+1004
+],
+[
+"India",
+"Other",
+2084
+],
+[
+"Philippines",
+"Other",
+741
+],
+[
+"Dominican Republic",
+"Other",
+614
+],
+[
+"Cuba",
+"Other",
+172
+],
+[
+"Vietnam",
+"Other",
+882
+],
+[
+"Korea, South",
+"Other",
+445
+],
+[
+"Colombia",
+"Other",
+649
+],
+[
+"Haiti",
+"Other",
+2025
+] 
+];
+data.addColumn('string','Country');
+data.addColumn('string','Admission Class');
+data.addColumn('number','Total');
+data.addRows(datajson);
+return(data);
+}
+ 
+// jsDrawChart
+function drawChartSankeyID7acc9310b8() {
+var data = gvisDataSankeyID7acc9310b8();
+var options = {};
+options["width"] = 1200;
+options["height"] = 1000;
+options["sankey"] = { iterations:0 };
+
+
+    var chart = new google.visualization.Sankey(
+    document.getElementById('SankeyID7acc9310b8')
+    );
+    chart.draw(data,options);
+    
+
+}
+  
+ 
+// jsDisplayChart
+(function() {
+var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+var chartid = "sankey";
+  
+// Manually see if chartid is in pkgs (not all browsers support Array.indexOf)
+var i, newPackage = true;
+for (i = 0; newPackage && i < pkgs.length; i++) {
+if (pkgs[i] === chartid)
+newPackage = false;
+}
+if (newPackage)
+  pkgs.push(chartid);
+  
+// Add the drawChart function to the global list of callbacks
+callbacks.push(drawChartSankeyID7acc9310b8);
+})();
+function displayChartSankeyID7acc9310b8() {
+  var pkgs = window.__gvisPackages = window.__gvisPackages || [];
+  var callbacks = window.__gvisCallbacks = window.__gvisCallbacks || [];
+  window.clearTimeout(window.__gvisLoad);
+  // The timeout is set to 100 because otherwise the container div we are
+  // targeting might not be part of the document yet
+  window.__gvisLoad = setTimeout(function() {
+  var pkgCount = pkgs.length;
+  google.load("visualization", "1", { packages:pkgs, callback: function() {
+  if (pkgCount != pkgs.length) {
+  // Race condition where another setTimeout call snuck in after us; if
+  // that call added a package, we must not shift its callback
+  return;
+}
+while (callbacks.length > 0)
+callbacks.shift()();
+} });
+}, 100);
+}
+ 
+// jsFooter
+</script>
+ 
+<!-- jsChart -->  
+<script type="text/javascript" src="https://www.google.com/jsapi?callback=displayChartSankeyID7acc9310b8"></script>
+ 
+<!-- divChart -->
+  
+<div id="SankeyID7acc9310b8" 
+  style="width: 1200; height: 1000;">
+</div>
+ <div><span>Data: just.top_10 &#8226; Chart ID: <a href="Chart_SankeyID7acc9310b8.html">SankeyID7acc9310b8</a> &#8226; <a href="https://github.com/mages/googleVis">googleVis-0.6.1</a></span><br /> 
+<!-- htmlFooter -->
+<span> 
+  R version 3.3.1 (2016-06-21) 
+  &#8226; <a href="https://developers.google.com/terms/">Google Terms of Use</a> &#8226; <a href="https://google-developers.appspot.com/chart/interactive/docs/gallery/sankey">Documentation and Data Policy</a>
+</span></div>
+</body>
+</html>
