@@ -4,7 +4,7 @@ library(dplyr)
 library(tidyr)
 library(scales)
 
-setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Immigration data")
+setwd("~/President-Obama-Evaluation/Data files/Immigration data")
 
 naturalizations <- read_csv("naturalization.csv")
 naturalizations <- naturalizations[order(naturalizations$Year), ]
