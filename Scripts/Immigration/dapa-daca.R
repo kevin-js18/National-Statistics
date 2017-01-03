@@ -47,4 +47,7 @@ ggplot() +
   theme_nothing(legend = TRUE)
 
 
+# SOURCES:
 
+# DAPA/DACA data: Migration Policy Institute, http://www.migrationpolicy.org/article/frequently-requested-statistics-immigrants-and-immigration-united-states
+# Shapefile: US Census Bureau, https://www.census.gov/geo/maps-data/data/cbf/cbf_state.html

@@ -63,20 +63,22 @@ by_year_spread <- by_year_spread %>%
   mutate(`Rest of World` = Total - (Canada + Mexico + Nigeria + `Saudi Arabia` + Venezuela)) 
 
 by_year_final <- by_year_spread %>%
-  gather(Country, Total_barrels, Canada:`Rest of World`) %>%
+  gather(Country, Total_barrels, Canada:Venezuela) %>%
   group_by(Country, Year) %>%
   summarise(Barrels = sum(Total_barrels))
 
-by_year_final$Country <- factor(by_year_final$Country, levels = c("Canada", "Saudi Arabia", "Mexico", "Venezuela", "Nigeria", "Rest of World"))
+by_year_final$Country <- factor(by_year_final$Country, levels = c("Canada", "Saudi Arabia", "Mexico", "Venezuela", "Nigeria"))
 by_year_final <- by_year_final[order(by_year_final$Country), ]
 
 ggplot(by_year_final, aes(x = Year, y = Barrels, fill = Country, group = Country)) +
-  geom_bar(stat = "identity") +
+  geom_bar(stat = "identity", position = "dodge") +
   scale_fill_manual(name = "Countries", 
-                      values = c("#293132", "#23B5D3", "#6E7E85", "#B7CECE", "#9C92A3", "#DFD6A7"),
-                      breaks = c("Rest of World", "Nigeria", "Venezuela", "Mexico", "Saudi Arabia", "Canada"), 
-                      labels = c("Rest of the World", "Nigeria", "Venezuela", "Mexico", "Saudi Arabia", "Canada")) +
-  scale_y_continuous(name="Crude oil (in thousands of barrels)", labels = comma) 
+                      values = c("#293132", "#23B5D3", "#6E7E85", "#B7CECE", "#9C92A3"),
+                      breaks = c("Nigeria", "Venezuela", "Mexico", "Saudi Arabia", "Canada"), 
+                      labels = c("Nigeria", "Venezuela", "Mexico", "Saudi Arabia", "Canada")) +
+  scale_y_continuous(name="Crude oil (in thousands of barrels)", labels = comma) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+      panel.background = element_blank(), axis.line = element_line(color = "grey"))
   
 
 ggplot(production, aes(x = Year, y = total)) +
