@@ -83,7 +83,9 @@ ggplot(by_year_final, aes(x = Year, y = Barrels, fill = Country, group = Country
 
 ggplot(production, aes(x = Year, y = total)) +
   geom_bar(stat = "identity") +
-  scale_y_continuous(name="Crude oil (in thousands of barrels)", labels = comma) 
+  scale_y_continuous(name="Crude oil (in thousands of barrels)", labels = comma) +
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(color = "grey"))
 
 # SOURCES
 

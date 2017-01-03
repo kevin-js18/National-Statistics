@@ -18,7 +18,9 @@ naturalizations00 %>%
   scale_y_continuous(name = "Applications", labels = comma) +
   scale_x_continuous(breaks = 2000:2015) +
   ggtitle("Naturalizations") +
-  scale_fill_manual(values = c("#4bfc51", "#ff6666"))
+  scale_fill_manual(values = c("#4bfc51", "#ff6666"))+
+  theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(),
+        panel.background = element_blank(), axis.line = element_line(color = "grey"))
 
 # SOURCES
 
