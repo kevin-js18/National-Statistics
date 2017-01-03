@@ -4,7 +4,7 @@ library(tidyr)
 library(readr)
 library(Cairo)
 
-setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Energy, Environment data")
+setwd("~/President-Obama-Evaluation/Data files/Energy, Environment data")
 
 emissions <- read_csv("emissions.csv")
 emissions <- subset(emissions, emissions$`Energy Source` == "All Sources")
