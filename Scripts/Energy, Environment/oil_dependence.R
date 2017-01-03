@@ -3,7 +3,7 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Energy, Environment data")
+setwd("~/President-Obama-Evaluation/Data files/Energy, Environment data")
 
 imports <- read_csv("Oil imports.csv")
 production <- read_csv("Oil production.csv")
