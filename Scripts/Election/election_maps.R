@@ -8,7 +8,7 @@ library(ggmap)
 library(scales)
 library(RColorBrewer)
 
-setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Election data")
+setwd("~/President-Obama-Evaluation/Data files/Election data")
 
 elec_data <- read_csv("elec_data.csv")
 elec_df <- data.frame(elec_data)
