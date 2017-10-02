@@ -1,3 +1,7 @@
+# This visualization shows the percent of the illegal immigrant population for each state that would potentially qualify
+# for deferred action under the provisions of the Deferred Action for Childhood Arrivals (DACA) or 
+# Deferred Action for Parents of Americans (DAPA)
+
 library(readr)
 library(ggplot2)
 library(dplyr)
