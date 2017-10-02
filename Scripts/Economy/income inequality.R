@@ -1,3 +1,6 @@
+# This graph shows the change in percent share of wealth in America for the five socioeconomic quintiles. Lowest quintile
+# represents the lowest 20% of earners whereas highest quintile represents the highest 20% of earners.
+
 library(readr)
 library(tidyr)
 library(ggplot2)
