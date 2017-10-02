@@ -3,8 +3,6 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 
-setwd("~/President-Obama-Evaluation/Data files/Energy, Environment data")
-
 renewables <- read_csv("Renewables by source.csv")
 
 renewables.prod <- gather(renewables, Source, `Production (in trillions of BTUs)`, -(Year:`Total Biomass Energy Production`), -(`Hydroelectric Power Consumption`:`Total Renewable Energy Consumption`))
