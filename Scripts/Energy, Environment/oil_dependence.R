@@ -1,9 +1,11 @@
+# Two visualizations are shown here: 
+# The first is the change in annual US field production of crude oil from 2000 to 2016
+# The second is the change in annual oil imports from 2000 to 2016 from the top five countries the US relies on for oil
+
 library(readr)
 library(dplyr)
 library(tidyr)
 library(ggplot2)
-
-setwd("~/President-Obama-Evaluation/Data files/Energy, Environment data")
 
 imports <- read_csv("Oil imports.csv")
 production <- read_csv("Oil production.csv")
