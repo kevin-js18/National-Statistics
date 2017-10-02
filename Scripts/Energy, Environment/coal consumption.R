@@ -1,3 +1,5 @@
+# This visualization shows changes in annual coal consumption in the United States from 1970 to 2015
+
 library(ggplot2)
 library(dplyr)
 library(tidyr)
