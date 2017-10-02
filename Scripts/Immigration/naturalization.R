@@ -1,3 +1,6 @@
+# This visualization shows the number of applicants for naturalization in the United States from 2000 - 2015 while also 
+# indicating the number of applicants approved and the number of applicants rejected
+
 library(readr)
 library(ggplot2)
 library(dplyr)
