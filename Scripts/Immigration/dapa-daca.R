@@ -8,8 +8,6 @@ library(scales)
 library(RColorBrewer)
 library(Cairo)
 
-setwd("~/President-Obama-Evaluation/Data files/Immigration data")
-
 dd_data <- read_csv("DAPA-DACA.csv")
 dd_df <- data.frame(dd_data)
 
