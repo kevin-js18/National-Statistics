@@ -3,8 +3,6 @@ library(tidyr)
 library(ggplot2)
 library(dplyr)
 
-setwd("C:/Users/aet/Desktop/School/R projects/Final project/President-Obama-Evaluation/Data files/Economy")
-
 share <- read_csv("income inequality.csv")
 share <- share[, -5]
 
