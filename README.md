@@ -1,5 +1,5 @@
 # National-Statistics
-An analysis of US national statistics for the last 10 years, through visualization. 
+An analysis of US national statistics through visualization. 
 
 All visualizations are split into 5 categories:
 
