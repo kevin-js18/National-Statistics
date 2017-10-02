@@ -1,3 +1,7 @@
+# This shows two visualizations:
+# The first visualization shows annual consumption of renewable energy in the United States from 2000 - 2015 by energy source
+# The second visualization shows annual production of renewable energy in the United States from 2000 - 2015
+
 library(readr)
 library(dplyr)
 library(tidyr)
