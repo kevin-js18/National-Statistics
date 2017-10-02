@@ -5,8 +5,6 @@ library(ggplot2)
 library(googleVis)
 library(shiny)
 
-setwd("~/President-Obama-Evaluation/Data files/Immigration data/Permanent residents")
-
 data09 <- read_csv("2009.csv")
 data10 <- read_csv("2010.csv")
 data11 <- read_csv("2011.csv")
