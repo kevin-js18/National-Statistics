@@ -1,3 +1,6 @@
+# This visualization shows the election results by county for the 2008 and 2012 US Presidential Elections.
+# Election results in Alaska are displayed by Legislative District
+
 library(ggplot2)
 library(maptools)
 library(dplyr)
@@ -12,7 +15,7 @@ library(RColorBrewer)
 elec_data <- read_csv("elec_data.csv")
 elec_df <- data.frame(elec_data)
 
-# Create separate data frames for Alaska, as the data is organized by Congressional District rather than County
+# Create separate data frames for Alaska, as the data is organized by Legislative District rather than County
 alaska_df08 <- subset(elec_df, elec_df$year == 2008 & elec_df$state == "AK")
 alaska_df12 <- subset(elec_df, elec_df$year == 2012 & elec_df$state == "AK")
 
