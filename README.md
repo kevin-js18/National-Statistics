@@ -1,7 +1,7 @@
 # National-Statistics
 An analysis of US national statistics through visualization. 
 
-All visualizations are split into 5 categories:
+All visualizations are split into 4 categories:
 
 * Economy
 * Election (only 2008 and 2012)
